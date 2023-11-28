@@ -43,10 +43,6 @@ selected_month = st.sidebar.selectbox('Select Month', list(data['month'].unique(
 # Filter data based on the selected year and month
 data_filtered = data[(data['year'] == selected_year) & (data['month'] == selected_month)].copy()
 
-# Forward Fill Missing Values
-data_filtered['PM2.5'].ffill(inplace=True)
-data['PM2.5'].ffill(inplace=True)
-
 # Displaying data statistics
 st.subheader('Data Overview for Selected Period')
 st.write(data_filtered.describe())
@@ -96,7 +92,7 @@ st.pyplot(fig)
 # Time Series Decomposition of PM2.5
 st.subheader('Time Series Decomposition of PM2.5')
 try:
-    data_filtered['PM2.5'].fillna(method='ffill', inplace=True)
+    data_filtered['PM2.5'].ffill(inplace=True)
     decomposed = seasonal_decompose(data_filtered['PM2.5'], model='additive', period=24) # Adjust period as necessary
     fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8))
     decomposed.trend.plot(ax=ax1, title='Trend')
@@ -114,7 +110,7 @@ try:
     # Ensure correct data types and handle missing values
     data['hour'] = data['hour'].astype(int)
     data['PM2.5'] = pd.to_numeric(data['PM2.5'], errors='coerce')
-    data['PM2.5'].fillna(method='ffill', inplace=True)
+    data['PM2.5'].ffill(inplace=True)
 
     # Calculate hourly averages
     hourly_avg = data.groupby('hour')['PM2.5'].mean()
