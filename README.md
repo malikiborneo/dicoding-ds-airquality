@@ -80,8 +80,8 @@ To run the Air Quality Analysis Dashboard, follow these steps:
 ### P.S.
 
 Since Dicoding recommended creating the good and tidy folder structures, as `dashboard.py` in `dashboard` folder, then the deployment for Streamlit App affected.
-
 That was why I put the `requirements.txt` in the `dashboard` folder as well.  
+
 ---
 
 ## About Me
