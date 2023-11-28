@@ -106,11 +106,22 @@ except ValueError as e:
 
 # Hourly Averages Heatmap
 st.subheader('Hourly Averages of PM2.5')
-hourly_avg = data.groupby(['hour']).mean()['PM2.5']
-fig, ax = plt.subplots()
-sns.heatmap([hourly_avg.values], ax=ax, cmap='coolwarm')
-plt.title('Hourly Averages of PM2.5')
-st.pyplot(fig)
+try:
+    # Ensure correct data types and handle missing values
+    data['hour'] = data['hour'].astype(int)
+    data['PM2.5'] = pd.to_numeric(data['PM2.5'], errors='coerce')
+    data['PM2.5'].fillna(method='ffill', inplace=True)
+
+    # Calculate hourly averages
+    hourly_avg = data.groupby('hour')['PM2.5'].mean()
+
+    # Plotting
+    fig, ax = plt.subplots()
+    sns.heatmap([hourly_avg.values], ax=ax, cmap='coolwarm')
+    plt.title('Hourly Averages of PM2.5')
+    st.pyplot(fig)
+except Exception as e:
+    st.error(f"Error in plotting hourly averages: {e}")
 
 # Wind Direction Analysis
 st.subheader('Wind Direction Analysis')
