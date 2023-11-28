@@ -6,14 +6,15 @@ import seaborn as sns
 from statsmodels.tsa.seasonal import seasonal_decompose
 import numpy as np
 
+# Title page
+st.set_page_config(page_title="Air Quality from Wanshouxigong Analysis by maliki_borneo")
+
 
 # Load dataset
 data = pd.read_csv('PRSA_Data_Wanshouxigong_20130301-20170228.csv')
 
 # Title of the dashboard
 st.title('Air Quality Analysis Dashboard: Wanshouxigong Station')
-
-
 
 
 
