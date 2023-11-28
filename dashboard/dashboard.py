@@ -11,7 +11,7 @@ st.set_page_config(page_title="Air Quality from Wanshouxigong Analysis by maliki
 
 
 # Load dataset
-data = pd.read_csv('../data/PRSA_Data_Wanshouxigong_20130301-20170228.csv')
+data = pd.read_csv('./data/PRSA_Data_Wanshouxigong_20130301-20170228.csv')
 
 # Title of the dashboard
 st.title('Air Quality Analysis Dashboard: Wanshouxigong Station')
@@ -41,7 +41,11 @@ selected_year = st.sidebar.selectbox('Select Year', list(data['year'].unique()))
 selected_month = st.sidebar.selectbox('Select Month', list(data['month'].unique()))
 
 # Filter data based on the selected year and month
-data_filtered = data[(data['year'] == selected_year) & (data['month'] == selected_month)]
+data_filtered = data[(data['year'] == selected_year) & (data['month'] == selected_month)].copy()
+
+# Forward Fill Missing Values
+data_filtered['PM2.5'].ffill(inplace=True)
+data['PM2.5'].ffill(inplace=True)
 
 # Displaying data statistics
 st.subheader('Data Overview for Selected Period')
