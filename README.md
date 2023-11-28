@@ -82,5 +82,3 @@ To run the Air Quality Analysis Dashboard, follow these steps:
 - **Dicoding ID**: [maliki_borneo](https://www.dicoding.com/users/maliki_borneo/)
 
 ---
-
-For more information or to view my other projects, please visit my [GitHub profile](https://github.com/your-github-profile).
