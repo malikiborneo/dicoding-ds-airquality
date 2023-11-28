@@ -113,12 +113,72 @@ plt.xlabel('Month')
 plt.ylabel('Average PM2.5')
 st.pyplot(fig)
 
+# Daily PM2.5 Levels
+st.subheader('Daily PM2.5 Levels')
+fig, ax = plt.subplots()
+ax.plot(data_filtered['day'], data_filtered['PM2.5'])
+plt.xlabel('Day of the Month')
+plt.ylabel('PM2.5 Concentration')
+st.pyplot(fig)
+
+# Pollutant Distribution
+st.subheader('Pollutant Distribution')
+selected_pollutant = st.selectbox('Select Pollutant', ['PM2.5', 'PM10', 'SO2', 'NO2', 'CO'])
+fig, ax = plt.subplots()
+sns.boxplot(x='month', y=selected_pollutant, data=data[data['year'] == selected_year], ax=ax)
+st.pyplot(fig)
+
+# Time Series Decomposition
+st.subheader('Time Series Decomposition of PM2.5')
+decomposed = seasonal_decompose(data_filtered['PM2.5'], model='additive', period=24)
+fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8))
+decomposed.trend.plot(ax=ax1, title='Trend')
+decomposed.seasonal.plot(ax=ax2, title='Seasonality')
+decomposed.resid.plot(ax=ax3, title='Residuals')
+plt.tight_layout()
+st.pyplot(fig)
+
+# Hourly Averages Heatmap
+st.subheader('Hourly Averages of PM2.5')
+hourly_avg = data.groupby(['hour']).mean()['PM2.5']
+fig, ax = plt.subplots()
+sns.heatmap([hourly_avg.values], ax=ax, cmap='coolwarm')
+plt.title('Hourly Averages of PM2.5')
+st.pyplot(fig)
+
+# Wind Direction Analysis
+st.subheader('Wind Direction Analysis')
+wind_data = data_filtered.groupby('wd')['PM2.5'].mean()
+fig = plt.figure(figsize=(8, 6))
+ax = fig.add_subplot(111, polar=True)
+theta = np.linspace(0, 2 * np.pi, len(wind_data))
+bars = ax.bar(theta, wind_data.values, align='center', alpha=0.5)
+plt.title('PM2.5 Levels by Wind Direction')
+st.pyplot(fig)
+
+# Rainfall vs. Air Quality
+st.subheader('Rainfall vs. PM2.5 Levels')
+fig, ax = plt.subplots()
+sns.scatterplot(x='RAIN', y='PM2.5', data=data_filtered, ax=ax)
+plt.title('Rainfall vs. PM2.5 Levels')
+st.pyplot(fig)
+
+# Correlation Heatmap - Interactive
+st.subheader('Interactive Correlation Heatmap')
+selected_columns = st.multiselect('Select Columns for Correlation', data.columns, default=['PM2.5', 'NO2', 'TEMP', 'PRES', 'DEWP'])
+corr = data[selected_columns].corr()
+fig, ax = plt.subplots()
+sns.heatmap(corr, annot=True, ax=ax)
+st.pyplot(fig)
+
+
+
 
 # Conclusion
 st.subheader('Conclusion')
 st.write("""
-- The dashboard allows for an in-depth analysis of air quality, focusing on PM2.5 levels.
-- Users can interactively select different time periods to observe changes and trends.
-- The heatmap provides insights into the relationships between different pollutants and weather conditions.
-- Seasonal trend analysis indicates significant variations in PM2.5 levels across different months.
+- The dashboard provides an in-depth and interactive analysis of air quality data.
+- Various visualizations offer insights into PM2.5 levels, their distribution, and factors affecting them.
+- Seasonal trends and the impact of different weather conditions and pollutants on air quality are clearly depicted.
+- Users can explore the data dynamically to gain a deeper understanding of air quality trends.
 """)
