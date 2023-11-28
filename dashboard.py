@@ -35,3 +35,21 @@ ax.plot(data_filtered['day'], data_filtered['PM2.5'])
 plt.xlabel('Day of the Month')
 plt.ylabel('PM2.5 Concentration')
 st.pyplot(fig)
+
+# Correlation heatmap for the selected month
+st.subheader('Correlation Heatmap of Air Quality Indicators')
+corr = data_filtered[['PM2.5', 'NO2', 'SO2', 'CO', 'O3', 'TEMP', 'PRES', 'DEWP']].corr()
+fig, ax = plt.subplots()
+sns.heatmap(corr, annot=True, ax=ax)
+plt.title('Correlation Heatmap')
+st.pyplot(fig)
+
+# Seasonal Trend Analysis
+st.subheader('Seasonal Trend Analysis')
+seasonal_trends = data.groupby('month')['PM2.5'].mean()
+fig, ax = plt.subplots()
+seasonal_trends.plot(kind='bar', color='skyblue', ax=ax)
+plt.title('Average Monthly PM2.5 Levels')
+plt.xlabel('Month')
+plt.ylabel('Average PM2.5')
+st.pyplot(fig)
