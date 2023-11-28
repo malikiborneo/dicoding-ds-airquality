@@ -76,7 +76,12 @@ To run the Air Quality Analysis Dashboard, follow these steps:
 
 - The dataset used for this analysis is included in the project repository.
 - A detailed Python notebook (`maliki-dicoding-ds-airquality.ipynb`) containing the data analysis and visualizations is also provided.
+---
+### P.S.
 
+Since Dicoding recommended creating the good and tidy folder structures, as `dashboard.py` in `dashboard` folder, then the deployment for Streamlit App affected.
+
+That was why I put the `requirements.txt` in the `dashboard` folder as well.  
 ---
 
 ## About Me
