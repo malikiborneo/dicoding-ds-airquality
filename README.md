@@ -24,10 +24,12 @@ The goal of this project is to analyze air quality data, specifically PM2.5 poll
 The dataset used in this project includes air quality measurements from the Wanshouxigong station, with a focus on PM2.5 levels and other related environmental data.
 
 ## Libraries Used
+- Streamlit
 - Pandas
 - Matplotlib
 - Seaborn
-- Streamlit
+- NumPy
+- SciPy
 - Statsmodels
 
 ## Key Insights
