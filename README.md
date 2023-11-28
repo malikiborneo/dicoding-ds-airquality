@@ -83,4 +83,4 @@ To run the Air Quality Analysis Dashboard, follow these steps:
 
 ---
 Find also the Python Notebook in here
-[Kaggle-maliki_borneo-Air Quality] https://www.kaggle.com/malikiborneo/maliki-dicoding-ds-airquality
+[Kaggle-maliki_borneo-AirQuality] https://www.kaggle.com/malikiborneo/maliki-dicoding-ds-airquality
