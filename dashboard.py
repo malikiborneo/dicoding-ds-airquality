@@ -14,8 +14,23 @@ data = pd.read_csv('PRSA_Data_Wanshouxigong_20130301-20170228.csv')
 st.title('Air Quality Analysis Dashboard: Wanshouxigong Station')
 
 
+
+
+
 # Description
 st.write('This dashboard provides an interactive way to explore air quality data, specifically focusing on PM2.5 levels and their relationship with various weather conditions.')
+
+
+# About me
+st.markdown("""
+### About Me
+- **Name**: Reza Maliki Akbar
+- **Email Address**: rezamaliki.akbar@gmail.com
+- **Dicoding ID**: [maliki_borneo](https://www.dicoding.com/users/maliki_borneo/)
+
+### Project Overview
+This dashboard presents an analysis of air quality data, particularly focusing on PM2.5 levels, from the Wanshouxigong station. The project aims to uncover trends, seasonal variations, and the impact of different weather conditions on air quality. Insights from this analysis can be valuable for environmental studies and public health monitoring.
+""")
 
 # Adding a sidebar for interactive inputs
 st.sidebar.header('User Input Features')
@@ -73,15 +88,20 @@ fig, ax = plt.subplots()
 sns.boxplot(x='month', y=selected_pollutant, data=data[data['year'] == selected_year], ax=ax)
 st.pyplot(fig)
 
-# Time Series Decomposition
+# Time Series Decomposition of PM2.5
 st.subheader('Time Series Decomposition of PM2.5')
-decomposed = seasonal_decompose(data_filtered['PM2.5'], model='additive', period=24)
-fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8))
-decomposed.trend.plot(ax=ax1, title='Trend')
-decomposed.seasonal.plot(ax=ax2, title='Seasonality')
-decomposed.resid.plot(ax=ax3, title='Residuals')
-plt.tight_layout()
-st.pyplot(fig)
+try:
+    data_filtered['PM2.5'].fillna(method='ffill', inplace=True)
+    decomposed = seasonal_decompose(data_filtered['PM2.5'], model='additive', period=24) # Adjust period as necessary
+    fig, (ax1, ax2, ax3) = plt.subplots(3, 1, figsize=(10, 8))
+    decomposed.trend.plot(ax=ax1, title='Trend')
+    decomposed.seasonal.plot(ax=ax2, title='Seasonality')
+    decomposed.resid.plot(ax=ax3, title='Residuals')
+    plt.tight_layout()
+    st.pyplot(fig)
+except ValueError as e:
+    st.error("Unable to perform time series decomposition: " + str(e))
+
 
 # Hourly Averages Heatmap
 st.subheader('Hourly Averages of PM2.5')
@@ -115,8 +135,6 @@ corr = data[selected_columns].corr()
 fig, ax = plt.subplots()
 sns.heatmap(corr, annot=True, ax=ax)
 st.pyplot(fig)
-
-
 
 
 # Conclusion
