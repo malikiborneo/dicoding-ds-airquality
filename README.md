@@ -72,7 +72,7 @@ To run the Air Quality Analysis Dashboard, follow these steps:
 ### Additional Files
 
 - The dataset used for this analysis is included in the project repository.
-- A detailed Python notebook (`analysis_notebook.ipynb`) containing the data analysis and visualizations is also provided.
+- A detailed Python notebook (`maliki-dicoding-ds-airquality.ipynb`) containing the data analysis and visualizations is also provided.
 
 ---
 
